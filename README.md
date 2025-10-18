@@ -56,8 +56,9 @@ This MCP abstracts the complexity of cross-chain interactions by providing a str
             "<PROJECT_ABSOLUTE_FILEPATH>\\build\\index.js"
         ],
         "env": {
-            "SOL_PRIVATE_KEY": "<base58-encoded solana private key>",
-            "ETH_PRIVATE_KEY": "<base16-encoded ethereum private key>"
+            "ALCHEMY_API_KEY": "<alchemy account api key>",
+            "ALCHEMY_ACCESS_KEY": "<account kit server signer access key>",
+            "ALCHEMY_ACCOUNT_ID": "<optional account id if reusing access key>"
         }
     }
      ```
@@ -68,6 +69,17 @@ This MCP abstracts the complexity of cross-chain interactions by providing a str
     Head to open Claude for Desktop and verify that the Wormhole MCP tools has been added. Try asking the Chatbot for the to bridge from Sepolia to Avalanche.
 
     **NOTE:** Ensure you have testnet USDC in your wallet. You can get some testnet USDC from the [Circle Faucet](https://faucet.circle.com/).
+
+### Account Kit Configuration
+
+The MCP no longer relies on raw private keys. Instead it uses an [Alchemy Account Kit server signer](https://accountkit.alchemy.com/docs) to authorize transfers. Before running the server:
+
+- Generate an access key with `generateAccessKey` or through the Account Kit dashboard, and store it in `ALCHEMY_ACCESS_KEY`.
+- Provide your Alchemy API key via `ALCHEMY_API_KEY`. If you manage multiple smart wallet orgs with the same access key, also set `ALCHEMY_ACCOUNT_ID`.
+- Optionally set `ALCHEMY_CHAIN_AGNOSTIC_URL` to point at a custom Turnkey endpoint.
+- If you intend to use sponsored Solana transactions, supply your paymaster policy as `ALCHEMY_SOLANA_POLICY_ID`.
+
+During startup the server signs and verifies a probe message to ensure the Account Kit smart wallet can produce valid signatures before executing any transfers.
 
 ## Contributing
 
