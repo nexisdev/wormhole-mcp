@@ -2,10 +2,11 @@
   "name": "wormhole-mcp",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
+    "prestart": "npm run build",
+    "start": "node build/index.js",
     "dev": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
